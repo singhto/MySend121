@@ -598,8 +598,16 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               FlatButton.icon(
                 onPressed: () {
-                 Navigator.push(context,
-MaterialPageRoute(builder: (context) => SingInUser()));
+                  if (registerBool) {
+                    setState(() {
+                      cuttentWidget = RegisterUser();
+                    });
+                  } else {
+                    setState(() {
+                      cuttentWidget = SingInUser();
+                    });
+                  }
+                  Navigator.of(context).pop();
                 },
                 icon: Icon(
                   Icons.touch_app,

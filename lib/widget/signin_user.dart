@@ -29,7 +29,8 @@ class _SingInUserState extends State<SingInUser> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              MyStyle().showLogo(),
+              SizedBox(height: 20.0,),
+              MyStyle().showLogoNew(),
               MyStyle().mySizeBox(),
               TextField(
                 style: MyStyle().h2NormalStyle,
@@ -138,9 +139,31 @@ class _SingInUserState extends State<SingInUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(resizeToAvoidBottomPadding: true,
+    appBar: AppBar(
+      actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => Home(),
+                );
+                Navigator.of(context)
+                    .pushAndRemoveUntil(route, (value) => false);
+              })
+        ],
+        title: Center(
+          child: Text(
+            'เข้าสู่ระบบ',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+    ),
       body: Stack(
         children: <Widget>[
-          MyStyle().showTitle('Sign In Type User'),
+ 
           showContent(),
         ],
       ),

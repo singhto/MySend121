@@ -98,17 +98,20 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
 
   Widget showContent() => ListView.builder(
         itemCount: orderUserModels.length,
-        itemBuilder: (value, index) => Column(
-          children: <Widget>[
-            showShop(index),
-            showDateTime(index),
-            headTitle(),
-            showListViewOrder(index),
-            showTotalPrice(index),
-            showTotalDelivery(index),
-            showSumTotal(index),
-            showProcessOrder(index),
-          ],
+        itemBuilder: (value, index) => Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              showShop(index),
+              showDateTime(index),
+              headTitle(),
+              showListViewOrder(index),
+              showTotalPrice(index),
+              showTotalDelivery(index),
+              showSumTotal(index),
+              showProcessOrder(index),
+            ],
+          ),
         ),
       );
 
@@ -118,7 +121,7 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
           Container(
             margin: EdgeInsets.only(right: 16.0),
             child: MyStyle().showTitleH2Dark(
-                'ราคาอาหาร ${orderUserModels[index].totalPrice} บาท'),
+                'ค่าอาหาร ${orderUserModels[index].totalPrice} บาท'),
           ),
         ],
       );
@@ -153,13 +156,14 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
               decoration: BoxDecoration(
                   color: orderUserModels[index].success == 'ShopOrder' ||
                           orderUserModels[index].success == 'RiderOrder' ||
-                          orderUserModels[index].success == 'Success'
+                          orderUserModels[index].success == 'Success' 
                       ? Colors.pink.shade300
-                      : Colors.grey.shade300),
+                      : Colors.white),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('กำลังปลุงอาหาร'),
+                  Text('กำลังปรุงอาหาร',
+                    style: TextStyle(color: Colors.white),)
                 ],
               ),
             ),
@@ -170,11 +174,12 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
                   color: orderUserModels[index].success == 'RiderOrder' ||
                           orderUserModels[index].success == 'Success'
                       ? Colors.orange.shade400
-                      : Colors.grey.shade400),
+                      : Colors.white),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('กำลังไปส่ง'),
+                  Text('กำลังไปส่ง',
+                    style: TextStyle(color: Colors.white),)
                 ],
               ),
             ),
@@ -184,7 +189,7 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
               decoration: BoxDecoration(
                   color: orderUserModels[index].success == 'Success'
                       ? Colors.green.shade800
-                      : Colors.grey.shade700),
+                      : Colors.white),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

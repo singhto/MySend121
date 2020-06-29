@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:foodlion/models/food_model.dart';
 import 'package:foodlion/scaffold/show_food_shop.dart';
 import 'package:foodlion/utility/my_style.dart';
+import 'package:foodlion/widget/add_my_food.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyFoodShop extends StatefulWidget {
@@ -79,11 +80,11 @@ class _MyFoodShopState extends State<MyFoodShop> {
   }
 
   Widget showContent(int index) => Row(
-    children: <Widget>[
-      showImageFood(index),
-      showText(index),
-    ],
-  );
+        children: <Widget>[
+          showImageFood(index),
+          showText(index),
+        ],
+      );
 
   Widget showText(int index) => Container(
         padding: EdgeInsets.all(10.0),
@@ -102,29 +103,32 @@ class _MyFoodShopState extends State<MyFoodShop> {
 
   Row showButton(int index) {
     return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: Colors.green,
-                  ),
-                  onPressed: () {
-                    MaterialPageRoute route = MaterialPageRoute(builder: (value)=>ShowFoodShop(foodModel: foodModels[index],));
-                    Navigator.of(context).push(route).then((value){
-                      setState(() {
-                        readAllFood();
-                      });
-                    });
-                  }),
-              IconButton(
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                  onPressed: () => deleteConfirmDialog(index)),
-            ],
-          );
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: Colors.green,
+            ),
+            onPressed: () {
+              MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => ShowFoodShop(
+                        foodModel: foodModels[index],
+                      ));
+              Navigator.of(context).push(route).then((value) {
+                setState(() {
+                  readAllFood();
+                });
+              });
+            }),
+        IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
+            onPressed: () => deleteConfirmDialog(index)),
+      ],
+    );
   }
 
   Future<void> deleteConfirmDialog(int index) async {
@@ -235,6 +239,21 @@ class _MyFoodShopState extends State<MyFoodShop> {
 
   @override
   Widget build(BuildContext context) {
-    return statusData ? showNoData() : showListFood();
+    return Scaffold(
+      //appBar: AppBar(),
+
+      body: showListFood(),
+      
+
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddMyFood()));
+        },
+        label: Text('เพิ่มเมนูอาหาร'),
+        icon: Icon(Icons.control_point),
+        backgroundColor: MyStyle().primaryColor,
+      ),
+    );
   }
 }

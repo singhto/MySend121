@@ -73,72 +73,101 @@ class _HandleShopState extends State<HandleShop> {
         ? Center(
             child: Text('ยังไม่มีข้อมูล คะ'),
           )
-        : ListView.builder(
-            itemCount: orderUserModels.length,
-            itemBuilder: (context, index) => Column(
-              children: <Widget>[
-                MyStyle().showTitleH2DartBold(
-                    'เจ้าของ Order ==> ${userModels[index].name}'),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(orderUserModels[index].dateTime),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: MyStyle().showTitleH2DartBold('รายการอาหาร'),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: MyStyle().showTitleH2Dark('ราคา'),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: MyStyle().showTitleH2Dark('จำนวน'),
-                    ),
-                  ],
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: listFoodModels[index].length,
-                  itemBuilder: (context, index2) => Row(
+        : Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView.builder(
+              itemCount: orderUserModels.length,
+              itemBuilder: (context, index) => Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: Text(listFoodModels[index][index2].nameFood),
+                      Text(
+                        'ลูกค้า : ${userModels[index].name}',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(listFoodModels[index][index2].priceFood),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(listAmounts[index][index2].trim()),
+                      Text(
+                        'สถานะ : ${orderUserModels[index].success}',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                     ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    MyStyle().showTitleH2Primary(
-                        'ราคารวม = ${orderUserModels[index].totalPrice} บาท'),
-                    MyStyle().mySizeBox(),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    MyStyle().showTitleH2DartBold(
-                        'สถานะ => ${orderUserModels[index].success}'),
-                    MyStyle().mySizeBox(),
-                  ],
-                )
-              ],
+                  Row(
+                    children: <Widget>[
+                      Text('วันที่ : ${orderUserModels[index].dateTime}'),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Text('เลขที่ : ${orderUserModels[index].id}'),
+                    ],
+                  ),
+  
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Center(child: Text('รายการอาหาร')),
+                        
+                        flex: 5,
+                      ),
+                      Expanded(
+                        child: Text('ราคา'),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        child: Text('จำนวน'),
+                        flex: 1,
+                      ),
+  
+                    ],
+                  ),
+
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: listFoodModels[index].length,
+                    itemBuilder: (context, index2) => Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 5,
+                          child:
+                              Text('${listFoodModels[index][index2].nameFood}'),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(listFoodModels[index][index2].priceFood),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(listAmounts[index][index2].trim()),
+                        ),
+                        
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        MyStyle().showTitleH2Primary(
+                            'ราคา ${orderUserModels[index].totalPrice} บาท'),
+                     
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 5,
+                    color: Colors.grey.shade300,
+                  ),
+                ],
+              ),
             ),
           );
   }

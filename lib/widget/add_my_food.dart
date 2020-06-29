@@ -149,7 +149,8 @@ class _AddMyFoodState extends State<AddMyFood> {
   Widget saveButton() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      child: RaisedButton.icon(color: MyStyle().primaryColor,
+      child: RaisedButton.icon(
+        color: MyStyle().primaryColor,
         onPressed: () {
           if (file == null) {
             normalDialog(
@@ -165,8 +166,14 @@ class _AddMyFoodState extends State<AddMyFood> {
             uploadImage();
           }
         },
-        icon: Icon(Icons.fastfood, color: Colors.white,),
-        label: Text('Save Food', style: MyStyle().h2StyleWhite,),
+        icon: Icon(
+          Icons.fastfood,
+          color: Colors.white,
+        ),
+        label: Text(
+          'Save Food',
+          style: MyStyle().h2StyleWhite,
+        ),
       ),
     );
   }
@@ -182,7 +189,8 @@ class _AddMyFoodState extends State<AddMyFood> {
       Map<String, dynamic> map = Map();
       // map['file'] = UploadFileInfo(file, nameImage);
       // FormData formData = FormData.from(map);
-      map['file'] = await MultipartFile.fromFile(file.path, filename: nameImage);
+      map['file'] =
+          await MultipartFile.fromFile(file.path, filename: nameImage);
       FormData formData = FormData.fromMap(map);
       await Dio().post(url, data: formData).then((response) {
         urlFood = 'http://movehubs.com/app/Food/$nameImage';
@@ -194,40 +202,47 @@ class _AddMyFoodState extends State<AddMyFood> {
 
   Future<void> saveFoodThread() async {
     try {
-
-      String url = 'http://movehubs.com/app/addFoodShop.php?isAdd=true&idShop=$idShop&NameFood=$nameFood&DetailFood=$detailFood&UrlFood=$urlFood&PriceFood=$priceFood&Score=$score';
+      String url =
+          'http://movehubs.com/app/addFoodShop.php?isAdd=true&idShop=$idShop&NameFood=$nameFood&DetailFood=$detailFood&UrlFood=$urlFood&PriceFood=$priceFood&Score=$score';
 
       Response response = await Dio().get(url);
       if (response.toString() == 'true') {
-        MaterialPageRoute route = MaterialPageRoute(builder: (value)=>Home(currentWidget: MyFood(),));
-        Navigator.of(context).pushAndRemoveUntil(route, (value)=>false);
+        MaterialPageRoute route = MaterialPageRoute(
+            builder: (value) => Home(
+                  currentWidget: MyFood(),
+                ));
+        Navigator.of(context).pushAndRemoveUntil(route, (value) => false);
       } else {
         normalDialog(context, 'Cannot Add Food', 'Please Try Again');
       }
-
     } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: <Widget>[
-        MyStyle().showTitle('เพิ่มรายการอาหาร'),
-        MyStyle().mySizeBox(),
-        showImageFood(),
-        MyStyle().mySizeBox(),
-        showButton(),
-        MyStyle().mySizeBox(),
-        nameForm(),
-        MyStyle().mySizeBox(),
-        detailForm(),
-        MyStyle().mySizeBox(),
-        priceForm(),
-        MyStyle().mySizeBox(),
-        saveButton(),
-        MyStyle().mySizeBox(),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text('เพิ่มรายการอาหาร')),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: <Widget>[
+          MyStyle().showTitle('เพิ่มรายการอาหาร'),
+          MyStyle().mySizeBox(),
+          showImageFood(),
+          MyStyle().mySizeBox(),
+          showButton(),
+          MyStyle().mySizeBox(),
+          nameForm(),
+          MyStyle().mySizeBox(),
+          detailForm(),
+          MyStyle().mySizeBox(),
+          priceForm(),
+          MyStyle().mySizeBox(),
+          saveButton(),
+          MyStyle().mySizeBox(),
+        ],
+      ),
     );
   }
 }

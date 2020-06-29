@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlion/models/user_shop_model.dart';
+import 'package:foodlion/widget/info_shop.dart';
 
 class MySearch extends StatelessWidget {
   @override
@@ -15,6 +16,8 @@ class MySearch extends StatelessWidget {
               icon: Icon(Icons.search),
               onPressed: () {
                 showSearch(context: context, delegate: DataSearch());
+
+                
               })
         ],
       ),
@@ -45,8 +48,7 @@ class DataSearch extends SearchDelegate<String> {
     });
   }
 
-  final recentCities = [""];
-  
+  final recentCities = ["ออนซอนตำแซ่บ", "ต่ายจ่านโต"];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -76,7 +78,10 @@ class DataSearch extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     // show some reslt based on the selection
-    return Text('data Test');
+    return Scaffold(
+      //appBar: AppBar(),
+      body: InfoShop(),
+    );
   }
 
   @override

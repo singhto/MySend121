@@ -7,6 +7,7 @@ import 'package:foodlion/scaffold/home.dart';
 import 'package:foodlion/utility/my_constant.dart';
 import 'package:foodlion/utility/my_style.dart';
 import 'package:foodlion/utility/normal_dialog.dart';
+import 'package:foodlion/widget/signin_user.dart';
 
 
 
@@ -97,7 +98,7 @@ class _RegisterUserState extends State<RegisterUser> {
             onChanged: (value) => name = value.trim(),
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.account_box),
-              hintText: 'Name :',
+              hintText: 'ชื่อ-นามสกุล :',
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -140,28 +141,6 @@ class _RegisterUserState extends State<RegisterUser> {
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.lock_open),
               hintText: 'Password :',
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget phoneForm() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: 250.0,
-          child: TextField(
-            onChanged: (value) => phone = value.trim(),
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.phone),
-              hintText: 'Phone :',
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -230,9 +209,7 @@ class _RegisterUserState extends State<RegisterUser> {
               user == null ||
               user.isEmpty ||
               password == null ||
-              password.isEmpty ||
-              phone == null ||
-              phone.isEmpty) {
+              password.isEmpty ) {
             normalDialog(context, 'Have Space', 'Please Fill Every Blank');
           } else {
             checkUser();
@@ -299,7 +276,7 @@ class _RegisterUserState extends State<RegisterUser> {
           print('res==>>>$response');
           if (response.toString() == 'true') {
             MaterialPageRoute route = MaterialPageRoute(
-              builder: (value) => Home(),
+              builder: (value) => SingInUser(),
             );
             Navigator.of(context).pushAndRemoveUntil(route, (value) => false);
           } else {
@@ -318,7 +295,7 @@ class _RegisterUserState extends State<RegisterUser> {
         // showPicture(),
         // showButton(),
         MyStyle().mySizeBox(),
-        MyStyle().showTitle('Information'),
+        MyStyle().showTitle('สมัครสมาชิก'),
         MyStyle().mySizeBox(),
         nameForm(),
         MyStyle().mySizeBox(),
@@ -326,8 +303,7 @@ class _RegisterUserState extends State<RegisterUser> {
         MyStyle().mySizeBox(),
         passwordForm(),
         MyStyle().mySizeBox(),
-        phoneForm(),
-        MyStyle().mySizeBox(),
+        Text('ตำแหน่งปัจจุบันของคุณ :'),
         showLocation(),
         MyStyle().mySizeBox(),
         uploadButton(),

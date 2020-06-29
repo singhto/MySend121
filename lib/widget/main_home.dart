@@ -221,7 +221,7 @@ class _MainHomeState extends State<MainHome> {
           Navigator.of(context).push(route).then((value) => checkAmount());
         } else {
           normalDialog(context, 'ร้านปิดแล้ว',
-              'ต้องขอ อภัยมากๆ ครับ ร้านเปิดบริการ 8.00- 18.00');
+              'ต้องขอ อภัยมากๆ ครับ ร้านเปิดบริการ 8.00- 19.00');
         }
       },
       child: Card(
@@ -248,6 +248,7 @@ class _MainHomeState extends State<MainHome> {
           fontSize: 18.0,
         ),
       );
+      
 
   Widget showShop() {
     return showWidgets.length == 0
@@ -262,18 +263,18 @@ class _MainHomeState extends State<MainHome> {
           );
   }
 
-  Widget showBanner() {
-    return showBanners.length == 0
-        ? MyStyle().showProgress()
-        : CarouselSlider(
-            items: showBanners,
-            enlargeCenterPage: true,
-            aspectRatio: 16 / 9,
-            pauseAutoPlayOnTouch: Duration(seconds: 3),
-            autoPlay: true,
-            autoPlayAnimationDuration: Duration(seconds: 3),
-          );
-  }
+  // Widget showBanner() {
+  //   return showBanners.length == 0
+  //       ? MyStyle().showProgress()
+  //       : CarouselSlider(
+  //           items: showBanners,
+  //           enlargeCenterPage: true,
+  //           aspectRatio: 16 / 9,
+  //           pauseAutoPlayOnTouch: Duration(seconds: 3),
+  //           autoPlay: true,
+  //           autoPlayAnimationDuration: Duration(seconds: 3),
+  //         );
+  // }
 
   Widget showCart() {
     return GestureDetector(
@@ -358,11 +359,11 @@ class _MainHomeState extends State<MainHome> {
         color: MyStyle().dartColor,
       ),
       title: Text(
-        'รายการสั่งอาหาร',
+        'รายการสั่งซื้อ',
         style: MyStyle().h2Style,
       ),
       subtitle: Text(
-        'รายการสั่งอาหาร ที่รอส่ง',
+        'รายการสั่งอาหาร ติดตามสถานะ',
         style: MyStyle().h3StylePrimary,
       ),
       onTap: () {
@@ -409,11 +410,11 @@ class _MainHomeState extends State<MainHome> {
         color: MyStyle().dartColor,
       ),
       title: Text(
-        'หน้าแรก',
+        'สั่งอาหาร',
         style: MyStyle().h2Style,
       ),
       subtitle: Text(
-        'วันนี้กินอะไรดี',
+        'เมนูอร่อยพร้อมเสิร์ฟ',
         style: MyStyle().h3StylePrimary,
       ),
       onTap: () {
