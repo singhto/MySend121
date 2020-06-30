@@ -153,6 +153,25 @@ class MyStyle {
     );
   }
 
+    Widget showTitleAppBar(String string) {
+    return Row(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            string,
+            style: TextStyle(
+              fontFamily: 'ThaiSansNeue',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget showTitleH2Primary(String string) {
     return Row(
       children: <Widget>[

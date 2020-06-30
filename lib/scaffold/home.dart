@@ -3,21 +3,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlion/models/order_user_model.dart';
 import 'package:foodlion/scaffold/dashboard_delivery.dart';
-import 'package:foodlion/scaffold/detailOrder.dart';
 import 'package:foodlion/scaffold/rider_success.dart';
 import 'package:foodlion/scaffold/show_cart.dart';
-import 'package:foodlion/widget/add_my_food.dart';
 import 'package:foodlion/widget/guest.dart';
 import 'package:foodlion/widget/handle_shop.dart';
 import 'package:foodlion/widget/info_shop.dart';
 import 'package:foodlion/widget/main_home.dart';
 import 'package:foodlion/widget/my_delivery.dart';
-import 'package:foodlion/widget/my_food.dart';
 import 'package:foodlion/widget/my_food_shop.dart';
 import 'package:foodlion/widget/order_shop.dart';
 import 'package:foodlion/widget/register_delivery.dart';
 import 'package:foodlion/widget/register_shop.dart';
-import 'package:foodlion/widget/register_user.dart';
 import 'package:foodlion/widget/show_order_user.dart';
 import 'package:foodlion/widget/signin_delivery.dart';
 import 'package:foodlion/widget/signin_shop.dart';
@@ -424,10 +420,8 @@ class _HomeState extends State<Home> {
         style: MyStyle().h3StylePrimary,
       ),
       onTap: () {
-        setState(() {
-          cuttentWidget = InfoShop();
-        });
-        Navigator.of(context).pop();
+Navigator.of(context).pop();
+        routeToInfoShop();
       },
     );
   }
@@ -799,6 +793,14 @@ MaterialPageRoute(builder: (context) => SingInUser()));
         MaterialPageRoute(builder: (value) => ShowCart());
     Navigator.of(context).push(materialPageRoute).then((value) => checkLogin());
   }
+
+  void routeToInfoShop() {
+    MaterialPageRoute materialPageRoute = MaterialPageRoute(
+      builder: (context) => InfoShop(),
+    );
+    Navigator.push(context, materialPageRoute);
+  }
+
 
   @override
   Widget build(BuildContext context) {
