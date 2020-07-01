@@ -42,6 +42,22 @@ class MyStyle {
     );
   }
 
+    Widget showIconShop() {
+    return Icon(
+      Icons.store_mall_directory,
+      color: Colors.orange.shade600,
+      size: 120.0,
+
+    );
+  }
+
+      Widget showIconDrive() {
+    return Container(
+      height: 100.0,
+      child: Image.asset('images/SendDrive.png'),
+    );
+  }
+
   Widget showLogoThankYou() {
     return Container(
       height: 100.0,

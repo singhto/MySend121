@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlion/models/food_model.dart';
+import 'package:foodlion/scaffold/home.dart';
 import 'package:foodlion/scaffold/show_food_shop.dart';
 import 'package:foodlion/utility/my_style.dart';
 import 'package:foodlion/widget/add_my_food.dart';
@@ -240,20 +241,17 @@ class _MyFoodShopState extends State<MyFoodShop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(),
-
-      body: showListFood(),
-      
-
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
+      appBar: AppBar(
+        
+        title: Center(child: Text('รายการอาหาร')),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.control_point), onPressed: () {
+            Navigator.push(
               context, MaterialPageRoute(builder: (context) => AddMyFood()));
-        },
-        label: Text('เพิ่มเมนูอาหาร'),
-        icon: Icon(Icons.control_point),
-        backgroundColor: MyStyle().primaryColor,
+          })
+        ],
       ),
+      body: showListFood(),
     );
   }
 }

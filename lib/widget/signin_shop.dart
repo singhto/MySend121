@@ -26,9 +26,9 @@ class _SignInshopState extends State<SignInshop> {
         child: Container(
           width: 250.0,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              MyStyle().showLogo(),
+              SizedBox(height: 80.0,),
+              MyStyle().showIconShop(),
               MyStyle().mySizeBox(),
               TextField(
                 style: MyStyle().h2NormalStyle,
@@ -138,7 +138,7 @@ class _SignInshopState extends State<SignInshop> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        MyStyle().showTitle('Sign In Type Shop'),
+        MyStyle().showTitle('เข้าสู่ระบบร้านค้า'),
         showContent(),
       ],
     );

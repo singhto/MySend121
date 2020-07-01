@@ -7,6 +7,7 @@ import 'package:foodlion/scaffold/home.dart';
 import 'package:foodlion/utility/my_style.dart';
 import 'package:foodlion/utility/normal_dialog.dart';
 import 'package:foodlion/widget/my_food.dart';
+import 'package:foodlion/widget/my_food_shop.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +38,7 @@ class _AddMyFoodState extends State<AddMyFood> {
   Widget showImageFood() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.2,
       child: file == null ? Image.asset('images/food2.png') : Image.file(file),
     );
   }
@@ -207,10 +208,8 @@ class _AddMyFoodState extends State<AddMyFood> {
 
       Response response = await Dio().get(url);
       if (response.toString() == 'true') {
-        MaterialPageRoute route = MaterialPageRoute(
-            builder: (value) => Home(
-                  currentWidget: MyFood(),
-                ));
+        MaterialPageRoute route =
+            MaterialPageRoute(builder: (value) => MyFoodShop());
         Navigator.of(context).pushAndRemoveUntil(route, (value) => false);
       } else {
         normalDialog(context, 'Cannot Add Food', 'Please Try Again');

@@ -317,11 +317,10 @@ class _RegisterShopState extends State<RegisterShop> {
     return ListView(
       padding: EdgeInsets.all(16.0),
       children: <Widget>[
-        MyStyle().showTitle('ภาพร้านของคุณ'),
+        MyStyle().showTitle('ภาพหน้าร้านหรือโลโก้ร้านของคุณ'),
         showPicture(),
         showButton(),
-        MyStyle().mySizeBox(),
-        MyStyle().showTitle('ข้อมูลร้านของคุณ'),
+
         MyStyle().mySizeBox(),
         nameForm(),
         MyStyle().mySizeBox(),

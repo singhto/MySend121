@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +181,7 @@ class _MainHomeState extends State<MainHome> {
 
         setState(() {
           userShopModels.add(model);
-          if (distance <= 30.0) {
+          if (distance <= 15.0) {
             showWidgets.add(createCard(model, '${myFormat.format(distance)}'));
             statusShowCard = true;
           }
@@ -262,18 +263,18 @@ class _MainHomeState extends State<MainHome> {
           );
   }
 
-  // Widget showBanner() {
-  //   return showBanners.length == 0
-  //       ? MyStyle().showProgress()
-  //       : CarouselSlider(
-  //           items: showBanners,
-  //           enlargeCenterPage: true,
-  //           aspectRatio: 16 / 9,
-  //           pauseAutoPlayOnTouch: Duration(seconds: 3),
-  //           autoPlay: true,
-  //           autoPlayAnimationDuration: Duration(seconds: 3),
-  //         );
-  // }
+  Widget showBanner() {
+    return showBanners.length == 0
+        ? MyStyle().showProgress()
+        : CarouselSlider(
+            items: showBanners,
+            enlargeCenterPage: true,
+            aspectRatio: 16 / 7,
+            pauseAutoPlayOnTouch: Duration(seconds: 2),
+            autoPlay: true,
+            autoPlayAnimationDuration: Duration(seconds: 2),
+          );
+  }
 
   Widget showCart() {
     return GestureDetector(
@@ -468,8 +469,8 @@ class _MainHomeState extends State<MainHome> {
       ),
       body: Column(
         children: <Widget>[
-          //showBanner(),
-          //MyStyle().showTitle('ร้านอาหารใกล้คุณ'),
+          showBanner(),
+          MyStyle().showTitle('ร้านอาหารใกล้คุณ'),
           statusShowCard
               ? showShop()
               : Column(

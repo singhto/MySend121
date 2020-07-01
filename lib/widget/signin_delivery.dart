@@ -30,7 +30,8 @@ class _SignDeliveryState extends State<SignDelivery> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              MyStyle().showLogo(),
+              SizedBox(height: 80.0,),
+              MyStyle().showIconDrive(),
               MyStyle().mySizeBox(),
               TextField(
                 style: MyStyle().h2NormalStyle,
@@ -140,7 +141,7 @@ class _SignDeliveryState extends State<SignDelivery> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        MyStyle().showTitle('Sign In Type Delivery'),
+        MyStyle().showTitle('เข้าสู่ระบบ SEND Drive'),
         showContent(),
       ],
     );

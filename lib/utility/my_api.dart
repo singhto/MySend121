@@ -58,7 +58,7 @@ class MyAPI {
       if (delivaryModel.token.isNotEmpty) {
         // print('Sent Token to in aaaaa ===>> ${delivaryModel.token}');
         MyAPI().notificationAPI(delivaryModel.token,
-            'มีรายการสั่งอาหารจาก Send', 'ลูกค้า Send สั่งอาหารครับ พี่ Rider');
+            'มีรายการสั่งอาหารจาก SEND', 'ลูกค้า SEND สั่งอาหารครับ Driver');
       }
     }
   }
@@ -69,7 +69,7 @@ class MyAPI {
     DateTime open = now;
     DateTime close = now;
     open = DateTime(now.year, now.month, now.day, 6, 0);
-    close = DateTime(now.year, now.month, now.day, 23, 0);
+    close = DateTime(now.year, now.month, now.day, 19, 0);
     print('open = ${open.toString()}');
 
     if (now.isAfter(open)) {
