@@ -27,9 +27,13 @@ class _SingInUserState extends State<SingInUser> {
         width: 250.0,
         child: SingleChildScrollView(
           child: Column(
+            
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
+              MyStyle().mySizeBox(),
               MyStyle().showLogoNew(),
               MyStyle().mySizeBox(),
               TextField(
@@ -85,7 +89,7 @@ class _SingInUserState extends State<SingInUser> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'Sign In',
+                    'เข้าสู่ระบบสั่งอาหารออนไลน์',
                     style: MyStyle().h2StyleWhite,
                   ),
                 ),
@@ -138,32 +142,32 @@ class _SingInUserState extends State<SingInUser> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomPadding: true,
-    appBar: AppBar(
-      actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                MaterialPageRoute route = MaterialPageRoute(
-                  builder: (value) => Home(),
-                );
-                Navigator.of(context)
-                    .pushAndRemoveUntil(route, (value) => false);
-              })
-        ],
-        title: Center(
-          child: Text(
-            'เข้าสู่ระบบ',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-    ),
+    return Scaffold(
+      resizeToAvoidBottomPadding: true,
+      // appBar: AppBar(
+      //   actions: <Widget>[
+      //       IconButton(
+      //           icon: Icon(Icons.home),
+      //           onPressed: () {
+      //             MaterialPageRoute route = MaterialPageRoute(
+      //               builder: (value) => Home(),
+      //             );
+      //             Navigator.of(context)
+      //                 .pushAndRemoveUntil(route, (value) => false);
+      //           })
+      //     ],
+      //     title: Center(
+      //       child: Text(
+      //         'เข้าสู่ระบบ',
+      //         style: TextStyle(
+      //           fontSize: 24.0,
+      //           fontWeight: FontWeight.bold,
+      //         ),
+      //       ),
+      //     ),
+      // ),
       body: Stack(
         children: <Widget>[
- 
           showContent(),
         ],
       ),

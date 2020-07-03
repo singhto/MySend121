@@ -172,7 +172,7 @@ class _ShowCartState extends State<ShowCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ตะกร้า'),
+        title: Text('ตะกร้าสินค้า'),
       ),
       body: orderModels.length == 0
           ? Center(
@@ -197,7 +197,9 @@ class _ShowCartState extends State<ShowCart> {
 
   Widget orderButton() => Container(
         width: MediaQuery.of(context).size.width,
+        height: 80.0,
         child: RaisedButton.icon(
+          
           color: MyStyle().primaryColor,
           onPressed: () async {
             await MyAPI()
@@ -209,7 +211,7 @@ class _ShowCartState extends State<ShowCart> {
                 phoneForm();
               } else {
                 confirmDialog(
-                    context, 'ยืนยันคำสั่งซื้อ', 'กรุณา Confirm ด้วยคะ');
+                    context, 'ยืนยันคำสั่งซื้อ', 'กรุณา ยืนยัน ด้วยคะ');
               }
             });
           },
@@ -221,6 +223,7 @@ class _ShowCartState extends State<ShowCart> {
             'สั่งซื่อ',
             style: MyStyle().hiStyleWhite,
           ),
+          
         ),
       );
 
@@ -316,8 +319,10 @@ class _ShowCartState extends State<ShowCart> {
 
       if (delivaryModel.token.isNotEmpty) {
         // print('Sent Token to in aaaaa ===>> ${delivaryModel.token}');
-        MyAPI().notificationAPI(delivaryModel.token,
-            'มีรายการสั่งอาหารจาก Send', 'ลูกค้า Send สั่งอาหารครับ พี่ Rider');
+        MyAPI().notificationAPI(
+            delivaryModel.token,
+            'มีรายการสั่งอาหารจาก Send',
+            'ลูกค้า Send สั่งอาหารครับ พี่ Driver');
       }
     }
   }
@@ -343,10 +348,10 @@ class _ShowCartState extends State<ShowCart> {
 
   Widget showBottom() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width * 0.5,
+          width: MediaQuery.of(context).size.width * 1,
           child: Column(
             children: <Widget>[
               showSum(
@@ -373,98 +378,98 @@ class _ShowCartState extends State<ShowCart> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: orderModels.length,
-                  itemBuilder: (value, index) => Container(
-                        decoration: BoxDecoration(
-                            color: index % 2 == 0
-                                ? Colors.grey.shade300
-                                : Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                itemCount: orderModels.length,
+                itemBuilder: (value, index) => Container(
+                  decoration: BoxDecoration(
+                      color:
+                          index % 2 == 0 ? Colors.grey.shade300 : Colors.white),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    orderModels[index].nameFood,
+                                    style: MyStyle().h2NormalStyle,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    orderModels[index].nameShop,
+                                    style: MyStyle().h3StylePrimary,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          orderModels[index].priceFood,
+                          style: MyStyle().h2NormalStyle,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          orderModels[index].nameFood,
-                                          style: MyStyle().h2NormalStyle,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          orderModels[index].nameShop,
-                                          style: MyStyle().h3StylePrimary,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Text(
+                              orderModels[index].amountFood,
+                              style: MyStyle().h2NormalStyle,
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: Text(
-                                orderModels[index].priceFood,
-                                style: MyStyle().h2NormalStyle,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    orderModels[index].amountFood,
-                                    style: MyStyle().h2NormalStyle,
-                                  ),
-                                  Text(
-                                    '${distances[index].toString()} km',
-                                    style: MyStyle().h3StylePrimary,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Text(
-                                    calculateTotal(orderModels[index].priceFood,
-                                        orderModels[index].amountFood),
-                                    style: MyStyle().h2NormalStyle,
-                                  ),
-                                  Text(
-                                    transports[index].toString(),
-                                    style: MyStyle().h3StylePrimary,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Row(
-                                children: <Widget>[
-                                  IconButton(
-                                      icon: Icon(
-                                        Icons.delete_forever,
-                                        color: MyStyle().dartColor,
-                                      ),
-                                      onPressed: () {
-                                        confirmAnDelete(orderModels[index]);
-                                      }),
-                                ],
-                              ),
-                            ),
+                            // Text(
+                            //   '${distances[index].toString()} km',
+                            //   style: MyStyle().h3StylePrimary,
+                            // ),
                           ],
                         ),
-                      )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              calculateTotal(orderModels[index].priceFood,
+                                  orderModels[index].amountFood),
+                              style: MyStyle().h2NormalStyle,
+                            ),
+                            // Text(
+                            //   transports[index].toString(),
+                            //   style: MyStyle().h3StylePrimary,
+                            // )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(
+                                icon: Icon(
+                                  Icons.delete_forever,
+                                  color: MyStyle().dartColor,
+                                ),
+                                onPressed: () {
+                                  confirmAnDelete(orderModels[index]);
+                                }),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),

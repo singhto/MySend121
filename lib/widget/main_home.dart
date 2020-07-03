@@ -217,6 +217,7 @@ class _MainHomeState extends State<MainHome> {
         if (MyAPI().checkTimeShop()) {
           MaterialPageRoute route = MaterialPageRoute(
             builder: (value) => MyFood(idShop: model.id),
+          
           );
           Navigator.of(context).push(route).then((value) => checkAmount());
         } else {

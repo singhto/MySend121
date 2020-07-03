@@ -252,6 +252,10 @@ class MyStyle {
     );
   }
 
+    Widget showProgressLinear() {
+    return LinearProgressIndicator();
+  }
+
   Widget contentSignIn() {
     return Container(
       width: 250.0,

@@ -52,37 +52,14 @@ class _ShowFoodState extends State<ShowFood> {
           }
         }
       }
-
     } catch (e) {}
   }
 
-  Widget showContent() {
-    return Container(
-      alignment: Alignment(0, -0.7),
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            showName(),
-            MyStyle().mySizeBox(),
-            showImage(),
-            MyStyle().mySizeBox(),
-            MyStyle().showTitle('รายละเอียด :'),
-            showDetail(),
-            showPrice(),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget showPrice() {
-    return Row(
+    return Column(
       children: <Widget>[
-        MyStyle().showTitle('ราคา :'),
         Text(
-          '  ${foodModel.priceFood} บาท',
+          'ราคา :  ${foodModel.priceFood} บาท',
           style: MyStyle().h1PrimaryStyle,
         ),
       ],
@@ -103,12 +80,38 @@ class _ShowFoodState extends State<ShowFood> {
     );
   }
 
-  Widget showImage() => Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: CachedNetworkImage(
-          imageUrl: foodModel.urlFood,
-          placeholder: (value, string) => MyStyle().showProgress(),
-        ),
+  Widget showImage() => Stack(
+        children: <Widget>[
+          Hero(
+            tag: widget.foodModel.urlFood,
+            child: CachedNetworkImage(
+              imageUrl: foodModel.urlFood,
+              height: 260.0,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  color: Colors.white,
+                  iconSize: 30.0,
+                  onPressed: () => Navigator.pop(context),
+                ),
+                IconButton(
+                  icon: Icon(Icons.favorite),
+                  color: Theme.of(context).primaryColor,
+                  iconSize: 30.0,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
       );
 
   Widget chooseAmount() {
@@ -152,14 +155,48 @@ class _ShowFoodState extends State<ShowFood> {
     );
   }
 
-  
 
-  Widget addCartButton() {
-    return Expanded(
-      child: RaisedButton.icon(
-          color: MyStyle().primaryColor,
-          onPressed: () {
-            if (statusShop) {
+
+  Widget showButton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            chooseAmount(),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      body: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              showImage(),
+
+              
+            ],
+          ),
+          SizedBox(height: 20.0,),
+          showName(),
+          SizedBox(height: 20.0,),
+          Text('รายละเอียด :',style: TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor),),
+          showDetail(),
+          showPrice(),
+          SizedBox(height: 30.0,),
+          showButton(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (statusShop) {
               normalDialog(context, 'ไม่สามารถเลือกได้ คะ ?',
                   'โปรดเลือกอาหาร จาก ร้าน $nameCurrentShop คะ ถ้าต้องการเลือก รายการอาหารนี่ ให้ Confirm Order ก่อนคะ');
             } else if (amountFood == 0) {
@@ -183,44 +220,10 @@ class _ShowFoodState extends State<ShowFood> {
               SQLiteHelper().insertDatabase(model);
               Navigator.of(context).pop();
             }
-          },
-          icon: Icon(
-            Icons.add_shopping_cart,
-            color: Colors.white,
-          ),
-          label: Text(
-            'เพิ่มลงในตระกร้า',
-            style: MyStyle().h2StyleWhite,
-          )),
-    );
-  }
-
-  Widget showButton() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            chooseAmount(),
-            addCartButton(),
-          ],
-        ),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('อาหาร'),
-      ),
-      body: Stack(
-        children: <Widget>[
-          showContent(),
-          showButton(),
-        ],
+        },
+        label: Text('เพิ่มอาหารไปยังตะกร้า'),
+        icon: Icon(Icons.shopping_cart),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

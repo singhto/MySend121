@@ -83,7 +83,7 @@ class _SignInshopState extends State<SignInshop> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'Sign In',
+                    'เข้าสู่ระบบร้านค้า',
                     style: MyStyle().h2StyleWhite,
                   ),
                 ),
@@ -138,7 +138,6 @@ class _SignInshopState extends State<SignInshop> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        MyStyle().showTitle('เข้าสู่ระบบร้านค้า'),
         showContent(),
       ],
     );

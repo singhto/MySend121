@@ -240,6 +240,7 @@ class _MyFoodShopState extends State<MyFoodShop> {
 
   @override
   Widget build(BuildContext context) {
+   MyStyle().showProgress();
     return Scaffold(
       appBar: AppBar(
         

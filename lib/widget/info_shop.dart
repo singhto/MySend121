@@ -67,7 +67,7 @@ class _InfoShopState extends State<InfoShop> {
   Future<Null> findShop() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String idShop = preferences.getString('id');
-    //print('idShop = $idShop');
+    print('idShop = $idShop');
 
     try {
       var object = await MyAPI().findDetailShopWhereId(idShop);

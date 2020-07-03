@@ -75,7 +75,7 @@ class _ShowOrderShopState extends State<ShowOrderShop> {
       ),
       body: orderUserModels.length == 0
           ? Center(
-              child: Text('ยังไม่มีข้อมูล คะ'),
+              child: MyStyle().showProgress()
             )
           : Padding(
               padding: const EdgeInsets.all(20.0),

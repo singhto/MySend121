@@ -1,115 +1,142 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlion/models/user_shop_model.dart';
-import 'package:foodlion/widget/info_shop.dart';
+import 'package:foodlion/widget/my_food.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class MySearch extends StatelessWidget {
+class MySearch extends StatefulWidget {
+  @override
+  _MySearchState createState() => _MySearchState();
+}
+
+class _MySearchState extends State<MySearch> {
+  List<UserShopModel> _list = [];
+  List<UserShopModel> _search = [];
+
+  var loading = false;
+
+  Future<Null> fetchData() async {
+    setState(() {
+      loading = true;
+    });
+    _list.clear();
+    final response = await http.get('http://movehubs.com/app/getAllShop.php');
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        for (Map i in data) {
+          _list.add(UserShopModel.fromJson(i));
+          loading = false;
+        }
+      });
+    }
+  }
+
+  TextEditingController controller = new TextEditingController();
+
+  onSearch(String text) async {
+    _search.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+    _list.forEach((f) {
+      if (f.name.contains(text) || f.id.toString().contains(text))
+        _search.add(f);
+      {}
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ค้นหาร้านค้า'),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
+      appBar: AppBar(),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10.0),
+              color: Theme.of(context).primaryColor,
+              child: Card(
+                child: ListTile(
+                  leading: Icon(Icons.search),
+                  title: TextField(
+                    controller: controller,
+                    onChanged: onSearch,
+                    decoration: InputDecoration(
+                        hintText: 'ค้นหา', border: InputBorder.none),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      controller.clear();
+                      onSearch('');
+                    },
+                  ),
+                ),
+              ),
+            ),
+            loading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Expanded(
+                    child: _search.length != 0 || controller.text.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: _search.length,
+                            itemBuilder: (context, i) {
+                              final b = _search[i];
+                              return Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: Card(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(1.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: Icon(Icons.alarm),
+                                          title: Text(
+                                            b.name,
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          onTap: () {
+                                            print('id Shop ==>>${b.id}');
 
-                
-              })
-        ],
-      ),
-      // drawer: Drawer(),
-    );
-  }
-}
-
-class DataSearch extends SearchDelegate<String> {
-  List<UserShopModel> userShopModels = List();
-  List<String> shops = List();
-
-  DataSearch() {
-    initFirst();
-  }
-
-  Future<Null> initFirst() async {
-    String url = 'http://movehubs.com/app/getAllShop.php';
-    await Dio().get(url).then((value) {
-      // print('value = $value');
-
-      var result = json.decode(value.data);
-      for (var map in result) {
-        UserShopModel shopModel = UserShopModel.fromJson(map);
-        userShopModels.add(shopModel);
-        shops.add(shopModel.name);
-      }
-    });
-  }
-
-  final recentCities = ["ออนซอนตำแซ่บ", "ต่ายจ่านโต"];
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    // actions for app bar
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // leading icon on the left of the app bar
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-        ),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // show some reslt based on the selection
-    return Scaffold(
-      //appBar: AppBar(),
-      body: InfoShop(),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // show when someone searches for something
-    final suggestionList = query.isEmpty
-        ? recentCities
-        : shops.where((p) => p.startsWith(query)).toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context,);
-        },
-        leading: Icon(Icons.location_city),
-        title: RichText(
-          text: TextSpan(
-              text: suggestionList[index].substring(0, query.length),
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                    text: suggestionList[index].substring(query.length),
-                    style: TextStyle(color: Colors.grey))
-              ]),
+                                            Navigator.of(context).pop();
+                                            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                                              builder: (context) => MyFood(),
+                                            );
+                                            Navigator.push(context, materialPageRoute);
+                                          },
+                                          subtitle: Text('${b.lat} ${b.lng}'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, i) {
+                              final a = _list[i];
+                            },
+                            itemCount: _list.length,
+                          ),
+                  ),
+          ],
         ),
       ),
-      itemCount: suggestionList.length,
     );
   }
 }

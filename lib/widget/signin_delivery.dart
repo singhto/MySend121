@@ -86,7 +86,7 @@ class _SignDeliveryState extends State<SignDelivery> {
                     color: Colors.white,
                   ),
                   label: Text(
-                    'Sign In',
+                    'เข้าสู่ระบบ Driver',
                     style: MyStyle().h2StyleWhite,
                   ),
                 ),
@@ -141,7 +141,6 @@ class _SignDeliveryState extends State<SignDelivery> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        MyStyle().showTitle('เข้าสู่ระบบ SEND Drive'),
         showContent(),
       ],
     );

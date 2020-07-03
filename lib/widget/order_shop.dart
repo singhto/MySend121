@@ -133,30 +133,37 @@ class _OrderShopState extends State<OrderShop> {
   }
 
   Widget waitOrder() {
-    return Container(
-      alignment: Alignment(0, -0.6),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        child: Card(
-          color: MyStyle().primaryColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              MyStyle().mySizeBox(),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Image.asset('images/wait2.png'),
+    return Column(
+      children: <Widget>[
+        MyStyle().showProgressLinear(),
+        SizedBox(height: 50.0,),
+        Container(
+          alignment: Alignment(0, -0.6),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Card(
+              color: MyStyle().primaryColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                 
+                  MyStyle().mySizeBox(),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Image.asset('images/wait2.png'),
+                  ),
+                  MyStyle().mySizeBox(),
+                  Text(
+                    'โปรดรอ สักครู่คะ ยังไม่มี รายการสั่ง',
+                    style: MyStyle().h2StyleWhite,
+                  ),
+                  MyStyle().mySizeBox(),
+                ],
               ),
-              MyStyle().mySizeBox(),
-              Text(
-                'โปรดรอ สักครู่คะ ยังไม่มี รายการสั่ง',
-                style: MyStyle().h2StyleWhite,
-              ),
-              MyStyle().mySizeBox(),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -446,7 +453,7 @@ class _OrderShopState extends State<OrderShop> {
   Future<Null> sentNotiToUser(int index) async {
     UserModel userModel =
         await MyAPI().findDetailUserWhereId(orderUserModels[index].idUser);
-    MyAPI().notificationAPI(userModel.token, 'Rider กำลังไปรับอาหาร',
-        'Rider กำลังไปรับ อาหารที่ร้านค้า คะ รอแป้ป');
+    MyAPI().notificationAPI(userModel.token, 'SEND Driver กำลังไปรับอาหาร',
+        'SEND Driver กำลังไปรับ อาหารที่ร้านค้าครับ...');
   }
 }
