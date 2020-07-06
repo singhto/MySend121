@@ -90,14 +90,47 @@ class _GuestState extends State<Guest> {
         ),
       );
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'เข้าสู่ระบบก่อนค่ะ ^^',
+            style: MyStyle().h1Style,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('กรุณาเข้าสู่ระบบก่อนทำรายการ.'),
+                Text(
+                    'หากคุณยังไม่ได้เป็นสมาชิก กรุณาสมัครสมาชิกได้ที่เมนูสมัครใช้บริการ'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('เข้าสู่ระบบ'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget createCard(UserShopModel model, String distance) {
     return GestureDetector(
       onTap: () {
-        print('You Click ${model.id}');
-        MaterialPageRoute route = MaterialPageRoute(
-          builder: (value) => MyFood(idShop: model.id),
-        );
-        Navigator.of(context).push(route).then((value) => checkAmount());
+        //print('You Click ${model.id}');
+        // MaterialPageRoute route = MaterialPageRoute(
+        //   builder: (value) => MyFood(idShop: model.id),
+        // );
+        // Navigator.of(context).push(route).then((value) => checkAmount());
+        _showMyDialog();
       },
       child: Card(
         child: Column(
@@ -114,7 +147,10 @@ class _GuestState extends State<Guest> {
   }
 
   Widget showDistance(String distance) {
-    return Text('ระยะทาง $distance Km.', style: TextStyle(color: Theme.of(context).primaryColor),);
+    return Text(
+      'ระยะทาง $distance Km.',
+      style: TextStyle(color: Theme.of(context).primaryColor),
+    );
   }
 
   Future<void> readShopThread() async {
@@ -168,13 +204,18 @@ class _GuestState extends State<Guest> {
   Widget showBanner() {
     return showBanners.length == 0
         ? MyStyle().showProgress()
-        : CarouselSlider(
-            items: showBanners,
-            enlargeCenterPage: true,
-            aspectRatio: 16 / 7.2,
-            pauseAutoPlayOnTouch: Duration(seconds: 2),
-            autoPlay: true,
-            autoPlayAnimationDuration: Duration(seconds: 2),
+        : GestureDetector(
+          onTap: () {
+            _showMyDialog();
+          },
+            child: CarouselSlider(
+              items: showBanners,
+              enlargeCenterPage: true,
+              aspectRatio: 16 / 7.2,
+              pauseAutoPlayOnTouch: Duration(seconds: 2),
+              autoPlay: true,
+              autoPlayAnimationDuration: Duration(seconds: 2),
+            ),
           );
   }
 

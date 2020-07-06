@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodlion/models/food_model.dart';
 import 'package:foodlion/models/order_model.dart';
+import 'package:foodlion/models/user_shop_model.dart';
 import 'package:foodlion/scaffold/show_cart.dart';
 import 'package:foodlion/scaffold/show_food.dart';
 import 'package:foodlion/utility/my_style.dart';
@@ -12,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyFood extends StatefulWidget {
   final String idShop;
+  
   MyFood({Key key, this.idShop}) : super(key: key);
   @override
   _MyFoodState createState() => _MyFoodState();
@@ -23,6 +25,7 @@ class _MyFoodState extends State<MyFood> {
   List<FoodModel> foodModels = List();
   String myIdShop;
   int amount = 0;
+List<UserShopModel> userShopModels = List();
 
 
   // Method

@@ -42,7 +42,7 @@ class _ShowOrderUserState extends State<ShowOrderUser> {
       setState(() {
         currentWidget = Center(
           child: Text(
-            'ไม่มี รายการอาหาร ที่รอส่ง คะ',
+            'ไม่มีรายการอาหาร',
             style: MyStyle().h1PrimaryStyle,
           ),
         );

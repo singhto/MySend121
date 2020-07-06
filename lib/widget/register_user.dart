@@ -288,26 +288,34 @@ class _RegisterUserState extends State<RegisterUser> {
   }
 
   Widget showListView() {
-    return ListView(
-      padding: EdgeInsets.all(16.0),
-      children: <Widget>[
-        // MyStyle().showTitle('User Picture'),
-        // showPicture(),
-        // showButton(),
-        MyStyle().mySizeBox(),
-        MyStyle().showTitle('สมัครสมาชิก'),
-        MyStyle().mySizeBox(),
-        nameForm(),
-        MyStyle().mySizeBox(),
-        userForm(),
-        MyStyle().mySizeBox(),
-        passwordForm(),
-        MyStyle().mySizeBox(),
-        Text('ตำแหน่งปัจจุบันของคุณ :'),
-        showLocation(),
-        MyStyle().mySizeBox(),
-        uploadButton(),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [Colors.white, Colors.orange.shade600],
+          radius: 1.5,
+        ),
+      ),
+      child: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: <Widget>[
+          // MyStyle().showTitle('User Picture'),
+          // showPicture(),
+          // showButton(),
+          MyStyle().mySizeBox(),
+          MyStyle().showTitle('สมัครสมาชิก'),
+          MyStyle().mySizeBox(),
+          nameForm(),
+          MyStyle().mySizeBox(),
+          userForm(),
+          MyStyle().mySizeBox(),
+          passwordForm(),
+          MyStyle().mySizeBox(),
+          Text('ตำแหน่งปัจจุบันของคุณ :'),
+          showLocation(),
+          MyStyle().mySizeBox(),
+          uploadButton(),
+        ],
+      ),
     );
   }
 

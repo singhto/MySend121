@@ -103,7 +103,7 @@ class _ShowCartState extends State<ShowCart> {
 
       double lat1 = latUser;
       double lng1 = lngUser;
-      print('lat1, lng1 User ===>>>>>>> $lat1,$lng1');
+      //print('lat1, lng1 User ===>>>>>>> $lat1,$lng1');
 
       if (lat1 == null) {
         lat1 = double.parse(userModel.lat);
@@ -112,7 +112,7 @@ class _ShowCartState extends State<ShowCart> {
 
       double lat2 = double.parse(userShopModel.lat);
       double lng2 = double.parse(userShopModel.lng);
-      print('lat2, lng2 Shop ===>>>>>>> $lat2,$lng2');
+      //print('lat2, lng2 Shop ===>>>>>>> $lat2,$lng2');
 
       // List<double> location1 = [13.673452, 100.606735];
       // List<double> location2 = [13.665821, 100.644286];
@@ -177,7 +177,7 @@ class _ShowCartState extends State<ShowCart> {
       body: orderModels.length == 0
           ? Center(
               child: Text(
-                'ยังไม่มี รายการอาหาร คะ',
+                'ยังไม่มี รายการอาหาร',
                 style: MyStyle().h1PrimaryStyle,
               ),
             )
@@ -478,7 +478,7 @@ class _ShowCartState extends State<ShowCart> {
   }
 
   Future<void> confirmAnDelete(OrderModel model) async {
-    print('id delete ==>>> ${model.id}');
+    //print('id delete ==>>> ${model.id}');
     showDialog(
       context: context,
       builder: (value) => AlertDialog(

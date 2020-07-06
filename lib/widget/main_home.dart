@@ -17,7 +17,7 @@ import 'package:foodlion/utility/my_style.dart';
 import 'package:foodlion/utility/normal_dialog.dart';
 import 'package:foodlion/utility/normal_toast.dart';
 import 'package:foodlion/utility/sqlite_helper.dart';
-import 'package:foodlion/widget/my_food.dart';
+import 'package:foodlion/widget/show_shop.dart';
 import 'package:foodlion/widget/show_order_user.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
@@ -165,6 +165,7 @@ class _MainHomeState extends State<MainHome> {
     try {
       Response response = await Dio().get(url);
       var result = json.decode(response.data);
+      int index = 0;
       // print('result ===>>> $result');
 
       for (var map in result) {
@@ -182,7 +183,9 @@ class _MainHomeState extends State<MainHome> {
         setState(() {
           userShopModels.add(model);
           if (distance <= 15.0) {
-            showWidgets.add(createCard(model, '${myFormat.format(distance)}'));
+            showWidgets
+                .add(createCard(model, '${myFormat.format(distance)}', index));
+            index++;
             statusShowCard = true;
           }
         });
@@ -211,14 +214,13 @@ class _MainHomeState extends State<MainHome> {
     );
   }
 
-  Widget createCard(UserShopModel model, String distance) {
+  Widget createCard(UserShopModel model, String distance, int index) {
     return GestureDetector(
       onTap: () {
+        //print('Yout Click index $index');
         if (MyAPI().checkTimeShop()) {
           MaterialPageRoute route = MaterialPageRoute(
-            builder: (value) => MyFood(idShop: model.id),
-          
-          );
+              builder: (value) => ShowShop(userShopModel: model));
           Navigator.of(context).push(route).then((value) => checkAmount());
         } else {
           normalDialog(context, 'ร้านปิดแล้ว',
@@ -240,7 +242,10 @@ class _MainHomeState extends State<MainHome> {
   }
 
   Widget showDistance(String distance) {
-    return Text('ระยะทาง $distance Km.', style: TextStyle(color: Theme.of(context).primaryColor),);
+    return Text(
+      'ระยะทาง $distance Km.',
+      style: TextStyle(color: Theme.of(context).primaryColor),
+    );
   }
 
   Text showName(UserShopModel model) => Text(
@@ -249,7 +254,6 @@ class _MainHomeState extends State<MainHome> {
           fontSize: 18.0,
         ),
       );
-      
 
   Widget showShop() {
     return showWidgets.length == 0
@@ -276,6 +280,26 @@ class _MainHomeState extends State<MainHome> {
             autoPlayAnimationDuration: Duration(seconds: 2),
           );
   }
+
+  // Widget showMyLocation() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(10.0),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //       children: <Widget>[
+  //         Text(
+  //           'ระยะทางจากตำแหน่งปัจจุบันของคุณ',
+  //           style: TextStyle(color: Colors.deepOrange),
+  //         ),
+  //         IconButton(
+  //           icon: Icon(Icons.location_searching),
+  //           color: Theme.of(context).primaryColor,
+  //           onPressed: () {},
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget showCart() {
     return GestureDetector(
@@ -458,7 +482,7 @@ class _MainHomeState extends State<MainHome> {
         child: userList(),
       ),
       appBar: AppBar(
-        title: Text('ร้านอาหารใกล้เคียง'),
+        title: Text('ร้านอาหารใกล้คุณ'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
@@ -471,17 +495,15 @@ class _MainHomeState extends State<MainHome> {
       body: Column(
         children: <Widget>[
           showBanner(),
-          MyStyle().showTitle('ร้านอาหารใกล้คุณ'),
+          //showMyLocation(),
           statusShowCard
               ? showShop()
-              : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Center(
-                      child: MyStyle().showProgress(),
-                    ),
-                  ],
-                ),
+              : Center(
+              child: Text(
+                'ไม่พบร้านค้าในพื้นที่...',
+                style: MyStyle().h1PrimaryStyle,
+              ),
+            )
         ],
       ),
     );

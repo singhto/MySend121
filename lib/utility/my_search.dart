@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:foodlion/models/order_model.dart';
 import 'package:foodlion/models/user_shop_model.dart';
-import 'package:foodlion/widget/my_food.dart';
+import 'package:foodlion/utility/my_api.dart';
+import 'package:foodlion/utility/my_style.dart';
+import 'package:foodlion/utility/normal_dialog.dart';
+import 'package:foodlion/utility/sqlite_helper.dart';
+import 'package:foodlion/widget/show_shop.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +17,7 @@ class MySearch extends StatefulWidget {
 class _MySearchState extends State<MySearch> {
   List<UserShopModel> _list = [];
   List<UserShopModel> _search = [];
+  int amount = 0;
 
   var loading = false;
 
@@ -23,13 +29,25 @@ class _MySearchState extends State<MySearch> {
     final response = await http.get('http://movehubs.com/app/getAllShop.php');
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      int index = 0;
       setState(() {
         for (Map i in data) {
           _list.add(UserShopModel.fromJson(i));
+          index++;
           loading = false;
         }
       });
     }
+  }
+
+  Future<void> checkAmount() async {
+    print('checkAmount Work');
+    try {
+      List<OrderModel> list = await SQLiteHelper().readDatabase();
+      setState(() {
+        amount = list.length;
+      });
+    } catch (e) {}
   }
 
   TextEditingController controller = new TextEditingController();
@@ -57,36 +75,37 @@ class _MySearchState extends State<MySearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      //appBar: AppBar(),
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(10.0),
-              color: Theme.of(context).primaryColor,
-              child: Card(
-                child: ListTile(
-                  leading: Icon(Icons.search),
-                  title: TextField(
-                    controller: controller,
-                    onChanged: onSearch,
-                    decoration: InputDecoration(
-                        hintText: 'ค้นหา', border: InputBorder.none),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      controller.clear();
-                      onSearch('');
-                    },
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              //color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Card(
+                  child: ListTile(
+                    leading: Icon(Icons.search),
+                    title: TextField(
+                      controller: controller,
+                      onChanged: onSearch,
+                      decoration: InputDecoration(
+                          hintText: 'ค้นหา', border: InputBorder.none),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.cancel),
+                      onPressed: () {
+                        controller.clear();
+                        onSearch('');
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
             loading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
+                ? MyStyle().showProgress()
                 : Expanded(
                     child: _search.length != 0 || controller.text.isNotEmpty
                         ? ListView.builder(
@@ -110,13 +129,23 @@ class _MySearchState extends State<MySearch> {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           onTap: () {
-                                            print('id Shop ==>>${b.id}');
-
-                                            Navigator.of(context).pop();
-                                            MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                                              builder: (context) => MyFood(),
-                                            );
-                                            Navigator.push(context, materialPageRoute);
+                                            if (MyAPI().checkTimeShop()) {
+                                              MaterialPageRoute route =
+                                                  MaterialPageRoute(
+                                                      builder: (value) =>
+                                                          ShowShop(
+                                                            userShopModel: b,
+                                                          ));
+                                              Navigator.of(context)
+                                                  .push(route)
+                                                  .then(
+                                                      (value) => checkAmount());
+                                            } else {
+                                              normalDialog(
+                                                  context,
+                                                  'ร้านปิดแล้ว',
+                                                  'ต้องขอ อภัยมากๆ ครับ ร้านเปิดบริการ 8.00- 19.00');
+                                            }
                                           },
                                           subtitle: Text('${b.lat} ${b.lng}'),
                                         ),

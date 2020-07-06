@@ -22,12 +22,17 @@ class _SingInUserState extends State<SingInUser> {
 
   Widget showContent() {
     return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [Colors.white, Colors.orange.shade600],
+          radius: 1.5,
+        ),
+      ),
       alignment: Alignment(0, -0.8),
       child: Container(
         width: 250.0,
         child: SingleChildScrollView(
           child: Column(
-            
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(

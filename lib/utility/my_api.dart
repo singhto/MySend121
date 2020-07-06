@@ -95,7 +95,7 @@ class MyAPI {
       onMessage: (message) {
         // ขณะเปิดแอพอยู่
         print('onMessage ==> $message');
-        normalToast('มี Notification คะ');
+        normalToast('มีข้อความจาก SEND คะ');
       },
       onResume: (message) {
         // ปิดเครื่อง หรือ หน้าจอ
@@ -126,7 +126,7 @@ class MyAPI {
       return transport;
     } 
     else {
-      transport = 19 + ((distance - 1) * 4);  //ไม่เกิน 1 km ส่งฟรี  km ที่ 2 = 19 บาท และตั้งแต่ kmที่ 3 เป็นต้นไป กิโลเมตรละ 4 บาท
+      transport = 19 + ((distance - 1) * 4).round();  //ไม่เกิน 1 km ส่งฟรี  km ที่ 2 = 19 บาท และตั้งแต่ kmที่ 3 เป็นต้นไป กิโลเมตรละ 4 บาท
       return transport;
     }
   }

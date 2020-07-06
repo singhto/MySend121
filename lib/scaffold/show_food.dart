@@ -180,14 +180,11 @@ class _ShowFoodState extends State<ShowFood> {
           Stack(
             children: <Widget>[
               showImage(),
-
-              
             ],
           ),
           SizedBox(height: 20.0,),
           showName(),
           SizedBox(height: 20.0,),
-          Text('รายละเอียด :',style: TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor),),
           showDetail(),
           showPrice(),
           SizedBox(height: 30.0,),
@@ -206,8 +203,8 @@ class _ShowFoodState extends State<ShowFood> {
               normalDialog(
                   context, 'ยังไม่ได้ Login', 'กรุณา Login ก่อน Order คะ');
             } else {
-              print(
-                  'idFood=$idFood, idShop=$idShop,nameShop=$nameshop, nameFood=$nameFood, urlFood=$urlFood, priceFood=$priceFood, amountFood=$amountFood');
+              //print('idFood=$idFood, idShop=$idShop,nameShop=$nameshop, nameFood=$nameFood, urlFood=$urlFood, priceFood=$priceFood, amountFood=$amountFood');
+              
               OrderModel model = OrderModel(
                 idFood: idFood,
                 idShop: idShop,
@@ -219,6 +216,7 @@ class _ShowFoodState extends State<ShowFood> {
               );
               SQLiteHelper().insertDatabase(model);
               Navigator.of(context).pop();
+              
             }
         },
         label: Text('เพิ่มอาหารไปยังตะกร้า'),

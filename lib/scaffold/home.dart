@@ -845,13 +845,16 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'SEND',
+            'S E N D',
             style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.announcement), onPressed: () {})
+        ],
       ),
       body: cuttentWidget,
     );

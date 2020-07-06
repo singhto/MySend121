@@ -124,7 +124,9 @@ class _RiderSuccessState extends State<RiderSuccess> {
               confirmSuccessDialog();
             }
           },
-          child: stateStatus ? Icon(Icons.home) : Icon(Icons.account_box),
+          child: stateStatus
+              ? Icon(Icons.store_mall_directory)
+              : Icon(Icons.account_circle),
         ),
       );
 
@@ -132,7 +134,12 @@ class _RiderSuccessState extends State<RiderSuccess> {
     showDialog(
       context: context,
       builder: (context) => SimpleDialog(
-        title: Text('รับอาหารจากร้านค้าแล้ว ?'),
+        title: Text(
+          'รับอาหารจากร้านค้าแล้ว ?',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor),
+        ),
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -149,7 +156,7 @@ class _RiderSuccessState extends State<RiderSuccess> {
                   Icons.check,
                   color: Colors.green,
                 ),
-                label: Text('รับอาหารเรียบร้อย'),
+                label: Text('เรียบร้อย'),
               ),
               OutlineButton.icon(
                 onPressed: () => Navigator.pop(context),
@@ -157,7 +164,7 @@ class _RiderSuccessState extends State<RiderSuccess> {
                   Icons.clear,
                   color: Colors.red,
                 ),
-                label: Text('ยังไม่ถึง กำลังไป'),
+                label: Text('ยังไม่ถึงกำลังไป'),
               )
             ],
           )
@@ -192,7 +199,7 @@ class _RiderSuccessState extends State<RiderSuccess> {
                   Icons.clear,
                   color: Colors.red,
                 ),
-                label: Text('ยังไม่ถึง กำลังไป'),
+                label: Text('กำลังไป..'),
               )
             ],
           )
@@ -207,7 +214,7 @@ class _RiderSuccessState extends State<RiderSuccess> {
     await Dio().get(url).then((value) {
       print(
           'value from orderSuccess ################===========>>>>> $value and tokenUser ---->>> $tokenUser');
-      MyAPI().notificationAPI(tokenUser, 'รับอาหาร เรียบร้อย นะคะ',
+      MyAPI().notificationAPI(tokenUser, 'รับอาหาร เรียบร้อย',
           'Rider มาส่งอาหารเรียบร้อยนะคะ ขอบคุณที่ใช้บริการของ Send คะ');
 
       // exit(0);
@@ -224,7 +231,7 @@ class _RiderSuccessState extends State<RiderSuccess> {
     return Scaffold(
       floatingActionButton: successJob(),
       appBar: AppBar(
-        title: Text('ไปรับอาหารจาก ร้าน และ ส่งให้ลูกค้า'),
+        title: Center(child: Text('ไปรับอาหารจากร้าน')),
       ),
       body: Column(
         children: <Widget>[
